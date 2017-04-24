@@ -1,0 +1,18 @@
+{
+  "name": "code-on-the-wall",
+  "version": "1.0.0",
+  "description": "Generate wallpaper from syntax highlighted, minified code",
+  "main": "index.js",
+  "author": "Sean Hendrickson",
+  "license": "Apache 2.0",
+  "scripts": {
+    "build": "yarn",
+    "code": "node index.js"
+  },
+  "dependencies": {
+    "highlight.js": "^9.10.0"
+  },
+  "devDependencies": {
+    "nightmare": "^2.10.0"
+  }
+}

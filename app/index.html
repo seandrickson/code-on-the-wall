@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width" />
+<script>
+    (function (window, document, undefined, CODE_TO_DISPLAY) {
+        'use strict';
+
+        var GOOGLE_FONT_URL_PATTERN = 'https://fonts.googleapis.com/css?family={0}';
+        var GOOGLE_FONT_DEFAULT = 'Source Code Pro';
+        var HIGHLIGHT_CSS_URL_PATTERN = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/{0}.min.css';
+        var HIGHLIGHT_CSS_DEFAULT = 'atom-one-dark';
+        var HIGHLIGHT_JS_URL = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js';
+
+        var DEFAULT_STYLES = {
+            opacity: .2,
+            overflow: 'hidden',
+            margin: 0,
+            padding: 0,
+            wordBreak: 'break-all',
+            hyphens: 'none',
+            textAlign: 'center',
+            fontFamily: 'Source Code Pro',
+            fontSize: '16px',
+            lineHeight: 1,
+        };
+
+        var get = function (url, callback) {
+            var client = new XMLHttpRequest();
+            client.open('GET', url);
+            client.onreadystatechange = function() {
+                if (client.readyState == 4 && client.status == 200) {
+                    callback.call(this, client.responseText);
+                }
+            }
+            client.send();
+        };
+
+        var loadScript = function (url, callback) {
+            var script = document.createElement('script');
+            script.src = url;
+            script.onload = callback;
+            document.documentElement.appendChild(script);
+        };
+
+        var loadStyle = function(styleUrl){
+            var styleElement = document.createElement('link');
+            styleElement.rel = 'stylesheet';
+            styleElement.href = styleUrl;
+            document.documentElement.appendChild(styleElement);
+        };
+
+        var cleanText = function (text) {
+            return String(text)
+                .replace(/[\n\r]/g, '') // remove new lines
+                .replace(/\/\*[\S\s]*\*\//g, ''); // remove comment blocks
+        };
+
+        var appendTextToNode = function (element, data) {
+            var dataTextNode = document.createTextNode(data);
+            element.appendChild(dataTextNode);
+        };
+
+        var hightlightTextInNode = function (codeElement) {
+            hljs.highlightBlock(codeElement);
+        };
+
+        var addZeroWidthSpacesForWrapping = function (codeElement) {
+            // insert zero-width spaces to force wrapping
+            function findTextNodes(node, fn) {
+                for (node = node.firstChild; node; node = node.nextSibling) {
+                    if (node.nodeType === Node.TEXT_NODE) {
+                        fn(node);
+                    } else if (node.nodeType === Node.ELEMENT_NODE && node.nodeName !== 'SCRIPT') {
+                        findTextNodes(node, fn);
+                    }
+                }
+            }
+
+            findTextNodes(codeElement, function (node) {
+                node.nodeValue = node.nodeValue.replace(/(.)/g, '$1\u200B');
+            });
+        };
+
+        var loadHighlightStyle = function (styleName) {
+            loadStyle(HIGHLIGHT_CSS_URL_PATTERN.replace('{0}', styleName));
+        };
+
+        var loadGoogleFont = function(fontFamily, elementStyle){
+            var fontFamilyUrl = String(encodeURIComponent(fontFamily)).replace(/%20/g, "+");
+            loadStyle(GOOGLE_FONT_URL_PATTERN.replace('{0}', fontFamilyUrl));
+            elementStyle.fontFamily = fontFamily;
+        };
+
+        var initFromQueryString = function(codeElement) {
+            var qs = (function(a) {
+                if (a == "") return {};
+                var b = {};
+                for (var i = 0; i < a.length; ++i)
+                {
+                    var p=a[i].split('=', 2);
+                    if (p.length == 1) b[p[0]] = "";
+                    else b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+                }
+                return b;
+            })(window.location.search.substr(1).split('&'));
+
+            loadGoogleFont(qs['googleFont'] || GOOGLE_FONT_DEFAULT, codeElement.style);
+            loadHighlightStyle(qs['highlightStyle'] || HIGHLIGHT_CSS_DEFAULT);
+
+            for (var key in DEFAULT_STYLES) {
+                codeElement.style[key] = qs[key] || DEFAULT_STYLES[key];
+            }
+        };
+
+        var applyNodeBgToRoot = function (codeElement) {
+            var bgColor = codeElement.style.backgroundColor;
+            if (bgColor)
+                document.documentElement.style.backgroundColor = bgColor;
+        };
+
+        var finalize = function () {
+            document.documentElement.classList.add('dom-ready');
+        };
+
+        var title = CODE_TO_DISPLAY.split('/')[5];
+        document.title = title;
+        loadScript(HIGHLIGHT_JS_URL, function () {
+            var CODE_NODE = document.body;
+            initFromQueryString(CODE_NODE);
+
+            // INITIALIZE
+            get(CODE_TO_DISPLAY, function (response) {
+                appendTextToNode(CODE_NODE, cleanText(response));
+                hightlightTextInNode(CODE_NODE);
+                addZeroWidthSpacesForWrapping(CODE_NODE);
+                applyNodeBgToRoot(CODE_NODE);
+                finalize();
+            });
+        });
+
+        // https://api.cdnjs.com/libraries?search=lodash&output=human
+    })(window, document, undefined, 'https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js');
+</script>
