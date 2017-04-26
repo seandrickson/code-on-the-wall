@@ -1,10 +1,24 @@
 const querystring = require('querystring');
 const path = require('path');
 const Nightmare = require('nightmare');
-const args = process.argv;
+const wallpaper = require('wallpaper');
+const args = require('yargs').argv;
 
-const PAGE_URL = path.resolve(__dirname, './app/index.html');
-const PAGE_PATH = `file:///${PAGE_URL}?${querystring.stringify(args)}`;
+function removeCommonArgs(args) {
+  const keyBlackList = ['_', '$0'];
+  let newArgs = {};
+
+  for (var i in args) {
+    if (!keyBlackList.includes(i))
+      newArgs[i] = args[i];
+  }
+
+  return newArgs;  
+}
+
+let PAGE_ARGS = removeCommonArgs(args);
+const PAGE_URL = path.resolve(__dirname, './web/index.html');
+const PAGE_PATH = `file:///${PAGE_URL}?${querystring.stringify(PAGE_ARGS)}`;
 
 const nightmare = new Nightmare({ show: false });
 
@@ -21,20 +35,27 @@ nightmare
   .then(function (page) {
     const width = page.width * page.density;
     const height = page.height * page.density;
+    const wallpaperName = `${page.title}_${width}x${height}.png`;
+    const wallpaperPath = path.resolve(__dirname, `./output/${wallpaperName}`);
+
+    console.log('Taking snapshot using: ' + querystring.stringify(PAGE_ARGS));
 
     return nightmare
       .viewport(page.width, page.height)
       .wait(1000)
-      .screenshot(path.resolve(__dirname, `./output/${page.title}_${width}x${height}.png`), {
+      .screenshot(wallpaperPath, {
         x: 0,
         y: 0,
         width: page.width,
         height: page.height
       })
-      .end()
+      .end(() => {
+        return wallpaperPath;
+      })
   })
   .then((res) => {
-    console.log('Screenshot made!');
+    wallpaper.set(res);
+    console.log('Wallpaper now set!');
   }, (err) => {
     console.error(err);
   })

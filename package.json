@@ -4,7 +4,7 @@
   "description": "Generate wallpaper from syntax highlighted, minified code",
   "main": "index.js",
   "author": "Sean Hendrickson",
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "scripts": {
     "build": "yarn",
     "code": "node index.js"
@@ -13,6 +13,8 @@
     "highlight.js": "^9.10.0"
   },
   "devDependencies": {
-    "nightmare": "^2.10.0"
+    "nightmare": "^2.10.0",
+    "wallpaper": "^2.4.0",
+    "yargs": "^7.1.0"
   }
 }
