@@ -9,11 +9,10 @@
     "build": "yarn",
     "code": "node index.js"
   },
-  "dependencies": {
-    "highlight.js": "^9.10.0"
-  },
   "devDependencies": {
+    "lodash": "^4.17.4",
     "nightmare": "^2.10.0",
+    "querystringify": "^1.0.0",
     "wallpaper": "^2.4.0",
     "yargs": "^7.1.0"
   }
