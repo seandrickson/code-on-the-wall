@@ -6,14 +6,25 @@
   "author": "Sean Hendrickson",
   "license": "Apache-2.0",
   "scripts": {
-    "build": "yarn",
-    "code": "node index.js"
+    "setup": "yarn",
+    "build": "webpack",
+    "generate": "node index.js"
+  },
+  "dependencies": {
+    "highlight.js": "^9.11.0"
   },
   "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.0.0",
+    "babel-preset-env": "^1.4.0",
+    "eslint": "^3.19.0",
+    "eslint-loader": "^1.7.1",
     "lodash": "^4.17.4",
     "nightmare": "^2.10.0",
     "querystringify": "^1.0.0",
     "wallpaper": "^2.4.0",
+    "webpack": "^2.4.1",
     "yargs": "^7.1.0"
   }
 }
