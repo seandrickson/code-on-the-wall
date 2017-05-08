@@ -6,7 +6,7 @@ const wallpaper = require('wallpaper');
 const args = require('yargs').argv;
 
 const PAGE_ARGS = _.omit(args, ['_', '$0']);
-const PAGE_PATH = path.resolve(__dirname, './web/index.html');
+const PAGE_PATH = path.resolve(__dirname, './dist/index.html');
 const PAGE_QUERY = qs.stringify(PAGE_ARGS);
 const PAGE_URL = `file:///${PAGE_PATH}?${PAGE_QUERY}`;
 
