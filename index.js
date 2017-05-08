@@ -14,6 +14,7 @@ const nightmare = new Nightmare({ show: false });
 
 nightmare
   .goto(PAGE_URL)
+  .wait('.dom-ready')
   .evaluate(() => {
     return {      
       height: window.screen.height,
@@ -26,13 +27,13 @@ nightmare
   .then((page) => {
     const pixelWidth = page.width * page.density;
     const pixelHeight = page.height * page.density;
+    const pageTitle = page.title || 'code-on-the-wall';
     const wallpaperName = `${page.title}_${pixelWidth}x${pixelHeight}.png`;
     const wallpaperPath = path.resolve(__dirname, `./output/${wallpaperName}`);
 
     console.log(`Taking snapshot using: ${page.query}`);
     return nightmare
       .viewport(page.width, page.height)
-      .wait('.dom-ready')
       .wait(1000)
       .screenshot(wallpaperPath, {
         x: 0,
