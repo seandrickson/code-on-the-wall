@@ -14,7 +14,7 @@ const nightmare = new Nightmare({ show: false });
 
 nightmare
   .goto(PAGE_URL)
-  .wait('.dom-ready')
+  .wait('html.dom-complete')
   .evaluate(() => {
     return {      
       height: window.screen.height,

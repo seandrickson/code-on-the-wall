@@ -1,9 +1,9 @@
-import getRootNode from 'get-root-node';
+import getHeadNode from 'get-head-node';
 
 export default function (url, callback) {
-    var rootNode = getRootNode();
+    var headNode = getHeadNode();
     var script = document.createElement('script');
     script.src = url;
     script.onload = callback;
-    rootNode.appendChild(script);
+    headNode.appendChild(script);
 }

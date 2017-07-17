@@ -1,10 +1,10 @@
-import getRootNode from 'get-root-node';
+import getHeadNode from 'get-head-node';
 
 export default function (styleUrl, callback) {
-    var rootNode = getRootNode();
+    var headNode = getHeadNode();
     var styleElement = document.createElement('link');
     styleElement.rel = 'stylesheet';
     styleElement.href = styleUrl;
     styleElement.onload = callback;
-    rootNode.appendChild(styleElement);
+    headNode.appendChild(styleElement);
 }

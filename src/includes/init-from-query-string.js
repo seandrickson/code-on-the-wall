@@ -11,7 +11,7 @@ var DEFAULT_STYLES = {
     wordBreak: 'break-all',
     hyphens: 'none',
     textAlign: 'center',
-    fontFamily: 'Source Code Pro',
+    fontFamily: 'Consolas',
     fontSize: '16px',
     lineHeight: 1,
 };
@@ -19,7 +19,8 @@ var DEFAULT_STYLES = {
 export default function () {
     var codeNode = getCodeNode();
 
-    loadGoogleFont(urlQsObj['googleFont']);
+    if (urlQsObj['googleFont'])
+        loadGoogleFont(urlQsObj['googleFont']);
     loadHighlightStyle(urlQsObj['highlightStyle']);
     var styles = Object.assign({}, DEFAULT_STYLES, urlQsObj);
 

@@ -28,6 +28,6 @@ module.exports = {
     },
     plugins: [
         new BabiliPlugin(),
-        new HtmlWebpackPlugin(),
+        new HtmlWebpackPlugin({ inject: 'head' }),
     ],
 };
