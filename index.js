@@ -47,10 +47,10 @@ nightmare
       });
   })
   .then((wallpaperPath) => {
-    wallpaper.set(wallpaperPath).then(() => {
-      console.log('Wallpaper now set!');
+    // wallpaper.set(wallpaperPath).then(() => {
+    //   console.log('Wallpaper now set!');
       process.exit();
-    });
+    // });
   }, (err) => {
     console.error(err);
     process.exit();

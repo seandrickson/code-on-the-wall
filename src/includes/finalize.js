@@ -1,4 +1,5 @@
-import windowOnload from './common/window-onload'
+import windowOnload from 'window-onload'
+import getRootNode from 'get-root-node'
 
 export default function () {
     windowOnload(function () {

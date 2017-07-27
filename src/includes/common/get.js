@@ -1,13 +1,13 @@
 import isFunction from 'lodash/isfunction'
 
-export default function (url, callback) {
+export default function (url, callback, asJSON = false) {
     if (!isFunction(callback)) return;
 
     var request = new XMLHttpRequest();
     request.open('GET', url, true);
     request.onload = function() {
         if (this.status >= 200 && this.status < 400) {
-            callback(JSON.parse(this.response));
+            asJSON ? callback(JSON.parse(this.response)) : callback(this.response);
         }
     };
     request.send();

@@ -27,7 +27,7 @@ export default function (codeName, callback) {
             var result = parseResultFromResponse(response) || CODE_TO_DISPLAY;
             if (isFunction(callback))
                 callback(result);
-        });
+        }, true);
     } else {
         callback(CODE_TO_DISPLAY);
     }
