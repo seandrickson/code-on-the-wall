@@ -1,6 +1,6 @@
-import getCodeNode from 'get-code-node';
-import loadStyle from 'load-style';
-import stringFormat from 'string-format';
+import getCodeNode from 'get-code-node'
+import loadStyle from 'load-style'
+import stringFormat from 'string-format'
 
 var GOOGLE_FONT_URL_PATTERN = 'https://fonts.googleapis.com/css?family={0}';
 var GOOGLE_FONT_DEFAULT = 'Source Code Pro';

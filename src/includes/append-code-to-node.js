@@ -1,7 +1,6 @@
-import getCodeNode from 'get-code-node';
+import crel from 'crel'
+import getCodeNode from 'get-code-node'
 
 export default function (codeText) {
-    var codeNode = getCodeNode();
-    var codeTextNode = document.createTextNode(codeText);
-    codeNode.appendChild(codeTextNode);
+    crel(getCodeNode(), codeText);
 }

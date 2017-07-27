@@ -1,7 +1,7 @@
-import urlQsObj from 'url-qs-obj';
-import loadGoogleFont from 'load-google-font';
-import loadHighlightStyle from 'load-highlight-style';
-import getCodeNode from 'get-code-node';
+import urlQsObj from 'url-qs-obj'
+import loadGoogleFont from 'load-google-font'
+import loadHighlightStyle from 'load-highlight-style'
+import getCodeNode from 'get-code-node'
 
 var DEFAULT_STYLES = {
     opacity: .2,

@@ -24,6 +24,7 @@ module.exports = {
             'node_modules',
             path.resolve(__dirname, 'src'),
             path.resolve(__dirname, 'src/includes'),
+            path.resolve(__dirname, 'src/includes/common'),
         ],
     },
     plugins: [
