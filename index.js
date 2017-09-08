@@ -4,14 +4,39 @@ const path = require('path');
 const qs = require('querystringify');
 const wallpaper = require('wallpaper');
 const args = require('yargs').argv;
+const wallConfig = require('./wall-config');
 
 const PAGE_ARGS = _.omit(args, ['_', '$0']);
 const PAGE_PATH = path.resolve(__dirname, './dist/index.html');
-const PAGE_QUERY = qs.stringify(PAGE_ARGS);
+let PAGE_QUERY;
+
+if (PAGE_ARGS.length)
+  PAGE_QUERY = qs.stringify(PAGE_ARGS);
+else
+  PAGE_QUERY = qs.stringify(wallConfig);
+
 const PAGE_URL = `file:///${PAGE_PATH}?${PAGE_QUERY}`;
 
-const nightmare = new Nightmare({ show: false });
+var nightmareConfig = {
+  show: false
+};
 
+if (wallConfig && wallConfig.devicePixelRatio) {
+  nightmareConfig.switches = {
+    'force-device-scale-factor': wallConfig.devicePixelRatio
+  }
+}
+
+var pageOverrides = [];
+if (wallConfig && wallConfig.width) {
+  pageOverrides.width = wallConfig.width;
+}
+if (wallConfig && wallConfig.height) {
+  pageOverrides.height = wallConfig.height;
+}
+
+console.log(`Starting application...`);
+const nightmare = new Nightmare(nightmareConfig);
 nightmare
   .goto(PAGE_URL)
   .wait('html.dom-complete')
@@ -25,25 +50,27 @@ nightmare
     };
   })
   .then((page) => {
-    const pixelWidth = page.width * page.density;
-    const pixelHeight = page.height * page.density;
+    var width = parseInt(pageOverrides.width.replace('px','')) || page.width;
+    var height = parseInt(pageOverrides.height.replace('px', '')) || page.height;
+    const pixelWidth = Math.floor(width * page.density);
+    const pixelHeight = Math.floor(height * page.density);
     const pageTitle = page.title || 'code-on-the-wall';
     const wallpaperName = `${page.title}_${pixelWidth}x${pixelHeight}.png`;
     const wallpaperPath = path.resolve(__dirname, `./output/${wallpaperName}`);
 
-    console.log(`Taking snapshot using: ${page.query}`);
+    console.log(`Taking snapshot using: Query: ${page.query}, Wallpaper: ${wallpaperName}`);
     return nightmare
-      .viewport(page.width, page.height)
+      .viewport(width, height)
       .wait(1000)
       .screenshot(wallpaperPath, {
         x: 0,
         y: 0,
-        width: page.width,
-        height: page.height
+        width: width,
+        height: height
       })
       .end(() => {
         console.log(`Wallpaper saved: ${wallpaperPath}`);
-        return wallpaperPath;
+        // return wallpaperPath;
       });
   })
   .then((wallpaperPath) => {
