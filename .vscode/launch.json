@@ -10,9 +10,7 @@
             "name": "Launch Program",
             "program": "${workspaceRoot}/index.js",
             "cwd": "${workspaceRoot}",
-            "args": [
-                "--code=jquery"
-            ]
+            "args": []
         }
     ]
 }

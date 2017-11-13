@@ -1,9 +1,9 @@
 {
-    "fontSize": "16px",
+    "fontSize": "18px",
     "lineHeight": ".9",
     "highlightStyle": "paraiso-dark",
     "code": "jquery",
-    "width": "852px",
-    "height": "1608px",
-    "devicePixelRatio": "1"
+    "width": 1331,
+    "height": 1331,
+    "deviceScaleFactor": 2
 }
