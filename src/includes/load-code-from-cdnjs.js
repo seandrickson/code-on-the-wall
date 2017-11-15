@@ -1,6 +1,5 @@
 import get from 'get'
-import isArray from 'lodash/isarray'
-import isFunction from 'lodash/isfunction'
+import { isArray, isFunction } from 'is-type'
 import stringFormat from 'string-format'
 
 var CDNJS_SEARCH_API_FORMAT = 'https://api.cdnjs.com/libraries?search={0}';

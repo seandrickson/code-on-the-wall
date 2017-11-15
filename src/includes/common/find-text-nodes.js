@@ -1,4 +1,4 @@
-import isFunction from 'lodash/isfunction'
+import { isFunction } from 'is-type'
 
 export default function (node, fn) {
     var treeWalker = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, null, false);

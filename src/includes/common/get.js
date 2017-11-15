@@ -1,4 +1,4 @@
-import isFunction from 'lodash/isfunction'
+import { isFunction } from 'is-type'
 
 export default function (url, callback, asJSON = false) {
     if (!isFunction(callback)) return;

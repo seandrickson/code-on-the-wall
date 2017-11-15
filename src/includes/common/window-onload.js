@@ -1,4 +1,4 @@
-import isFunction from 'lodash/isfunction'
+import { isFunction } from 'is-type'
 
 export default function (fn) {
     if (!isFunction(fn)) return;

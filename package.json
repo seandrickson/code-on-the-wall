@@ -12,8 +12,7 @@
   },
   "dependencies": {
     "crel": "^3.0.1",
-    "highlight.js": "^9.12.0",
-    "lodash": "^4.17.4"
+    "highlight.js": "^9.12.0"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
