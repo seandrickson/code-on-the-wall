@@ -1,8 +1,6 @@
-import hljs from 'highlight.js'
-import getCodeNode from 'get-code-node'
+import { codeNode } from 'get-node'
 
 export default function () {
-    var codeNode = getCodeNode();
-    codeNode.classList.add('language-javascript');
-    hljs.highlightBlock(codeNode);
+    if (window.hljs)
+        window.hljs.highlightBlock(codeNode());
 }

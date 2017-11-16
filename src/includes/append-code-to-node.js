@@ -1,6 +1,6 @@
 import crel from 'crel'
-import getCodeNode from 'get-code-node'
+import { codeNode } from 'get-node'
 
 export default function (codeText) {
-    crel(getCodeNode(), codeText);
+    crel(codeNode(), codeText);
 }

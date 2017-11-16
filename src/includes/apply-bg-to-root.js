@@ -1,8 +1,5 @@
-import getRootNode from 'get-root-node'
-import getCodeNode from 'get-code-node'
+import { htmlNode, codeNode } from 'get-node'
 
 export default function () {
-    var rootNode = getRootNode();
-    var codeNode = getCodeNode();
-    rootNode.style.backgroundColor = codeNode.style.backgroundColor;
+    htmlNode().style.backgroundColor = codeNode().style.backgroundColor;
 }

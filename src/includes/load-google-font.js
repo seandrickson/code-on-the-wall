@@ -1,15 +1,10 @@
-import getCodeNode from 'get-code-node'
-import loadStyle from 'load-style'
-import stringFormat from 'string-format'
+import { codeNode } from 'get-node'
+import { addStyle } from 'add-node'
 
-var GOOGLE_FONT_URL_PATTERN = 'https://fonts.googleapis.com/css?family={0}';
-var GOOGLE_FONT_DEFAULT = 'Source Code Pro';
-
+const GOOGLE_FONT_DEFAULT = 'Source Code Pro';
 export default function (fontFamily) {
-    var codeNode = getCodeNode();
-    var fontFamilyName = fontFamily || GOOGLE_FONT_DEFAULT;
-    var fontFamilyUrl = String(encodeURIComponent(fontFamilyName)).replace(/%20/g, "+");
-    var googleUrl = stringFormat(GOOGLE_FONT_URL_PATTERN, fontFamilyUrl);
-    loadStyle(googleUrl);
-    codeNode.style.fontFamily = fontFamilyName;
+    const fontFamilyName = fontFamily || GOOGLE_FONT_DEFAULT;
+    const fontFamilyUrl = encodeURIComponent(fontFamilyName).replace(/%20/g, '+');
+    addStyle(`https://fonts.googleapis.com/css?family=${fontFamilyUrl}`);
+    codeNode().style.fontFamily = fontFamilyName;
 }

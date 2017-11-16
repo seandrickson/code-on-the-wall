@@ -1,6 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-const BabiliPlugin = require("babili-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -28,7 +27,12 @@ module.exports = {
         ],
     },
     plugins: [
-        new BabiliPlugin(),
-        new HtmlWebpackPlugin({ inject: 'head' }),
+        new webpack.optimize.UglifyJsPlugin({
+            sourceMap: true
+        }),
+        new HtmlWebpackPlugin({
+            inject: 'head'
+        }),
     ],
+    devtool: 'source-map',
 };

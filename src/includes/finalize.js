@@ -1,9 +1,8 @@
-import windowOnload from 'window-onload'
-import getRootNode from 'get-root-node'
+import onload from 'onload'
+import { htmlNode } from 'get-node'
 
-export default function () {
-    windowOnload(function () {
-        var rootNode = getRootNode();
-        rootNode.classList.add('dom-complete');
+export default () => {
+    onload(() => {
+        htmlNode().classList.add('dom-complete');
     });
 }

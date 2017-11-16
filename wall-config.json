@@ -1,8 +1,8 @@
 {
     "fontSize": "18px",
     "lineHeight": ".9",
-    "highlightStyle": "paraiso-dark",
-    "code": "jquery",
+    "highlightStyle": "ocean",
+    "code": "core-js",
     "width": 1331,
     "height": 1331,
     "deviceScaleFactor": 2
