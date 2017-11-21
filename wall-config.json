@@ -1,9 +1,9 @@
 {
-    "fontSize": "18px",
+    "fontSize": "8px",
     "lineHeight": ".9",
     "highlightStyle": "ocean",
     "code": "core-js",
-    "width": 1331,
-    "height": 1331,
+    "width": 1920,
+    "height": 1080,
     "deviceScaleFactor": 2
 }

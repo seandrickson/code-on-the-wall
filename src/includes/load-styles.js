@@ -1,4 +1,3 @@
-import URLSearchParams from 'url-search-params'
 import loadGoogleFont from 'load-google-font'
 import loadHighlightStyle from 'load-highlight-style'
 import { codeNode } from 'get-node'

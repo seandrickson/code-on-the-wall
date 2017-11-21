@@ -1,54 +1,54 @@
 const puppeteer = require('puppeteer');
 const path = require('path');
 const qs = require('querystringify');
-const { _, $0, ...args } = require('yargs').argv;
-const wallConfig = require('./wall-config');
+const { _, $0, help, version, ...args } = require('yargs').argv;
+const { width, height, deviceScaleFactor, ...wallConfig } = require('./wall-config');
 
 const PAGE_ARGS = Object.assign({}, args, wallConfig);
 const PAGE_PATH = path.resolve(__dirname, './dist/index.html');
 const PAGE_QUERY = qs.stringify(PAGE_ARGS);
 const PAGE_URL = `file:///${PAGE_PATH}?${PAGE_QUERY}`;
-console.log('Configuration:', PAGE_ARGS);
+console.log('Configuration:', {
+  PAGE_ARGS,
+  PAGE_PATH,
+  PAGE_QUERY
+});
 
 const viewportObj = ((obj) => {
-  const intKeys = ['deviceScaleFactor', 'height', 'width'];
+  const defaultViewport = {
+    width: 1024,
+    height: 768,
+    deviceScaleFactor: 1
+  }
   let newObj = {};
-  intKeys.forEach(key => {
-    if (obj[key] !== undefined)
-      newObj[key] = parseInt(String(obj[key]).replace('px', ''));
+  Object.keys(defaultViewport).forEach(key => {
+    newObj[key] = obj[key] ? parseInt(String(obj[key]).replace('px', '')) : defaultViewport[key];
   });
   return newObj;
-})(wallConfig || {});
+})({
+  width,
+  height,
+  deviceScaleFactor
+} || {});
 
 (async () => {
   const browser = await puppeteer.launch({ headless: true });
 
   const page = await browser.newPage();
   await page.goto(PAGE_URL);
-  await page.setViewport(viewportObj);
   await page.waitFor('html.dom-complete');
+  await page.setViewport(viewportObj);
 
-  const dimensions = await page.evaluate(() => {
-    return {
-      height: window.screen.height,
-      width: window.screen.width,
-      density: window.devicePixelRatio,
-      title: document.title
-    };
-  });
-  const width = viewportObj.width || dimensions.width;
-  const height = viewportObj.height || dimensions.height;
-  const pixelWidth = Math.floor(width * dimensions.density);
-  const pixelHeight = Math.floor(height * dimensions.density);
-  const wallpaperName = `${dimensions.title}_${pixelWidth}x${pixelHeight}.png`;
+  const pixelWidth = Math.floor(viewportObj.width * viewportObj.deviceScaleFactor);
+  const pixelHeight = Math.floor(viewportObj.height * viewportObj.deviceScaleFactor);
+  const pageTitle = await page.title();
+  const wallpaperName = `${pageTitle || 'code-on-the-wall'}_${pixelWidth}x${pixelHeight}.png`;
   const wallpaperPath = path.resolve(__dirname, `./output/${wallpaperName}`);
-
+  
   console.log('Taking screenshot:', {
-    filename: wallpaperName,
-    filepath: wallpaperPath,
-    width: width,
-    height: height,
-    density: dimensions.density
+    wallpaperName,
+    wallpaperPath,
+    viewportObj
   });
   await page.screenshot({ path: wallpaperPath });
   console.log('Wallpaper saved:', wallpaperPath);

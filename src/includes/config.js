@@ -13,9 +13,13 @@ const DEFAULT_STYLES = {
     fontSize: '16px',
     lineHeight: 1,
 };
-const QUERY_STRING = new URLSearchParams(location.search.slice(1));
-const QUERY_STRING_OBJECT = ((qs) => {
-    return { [qs.keys()]: qs.values() };
+const QUERY_STRING = new URLSearchParams(window.location.search.slice(1));
+const QUERY_STRING_OBJECT = ((qsIterator) => {
+    let newObj = {};
+    for (let qs of qsIterator) {
+        newObj[qs[0]] = qs[1];
+    }
+    return newObj;
 })(QUERY_STRING);
 
 export const getConfig = () => {

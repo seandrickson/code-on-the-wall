@@ -16,7 +16,7 @@ export default (cdnjsCodeUrl) => {
     // INITIALIZE
     loadStyles();
     applyBgToRoot();
-    fetch(cdnjsCodeUrl).then((response) => {
+    return fetch(cdnjsCodeUrl).then((response) => {
         return response.text().then(function(text) {
             crel(codeNode(), cleanCodeText(text));
         });
