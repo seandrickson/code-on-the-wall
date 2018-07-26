@@ -8,6 +8,7 @@ const PAGE_ARGS = Object.assign({}, args, wallConfig);
 const PAGE_PATH = path.resolve(__dirname, './dist/index.html');
 const PAGE_QUERY = qs.stringify(PAGE_ARGS);
 const PAGE_URL = `file:///${PAGE_PATH}?${PAGE_QUERY}`;
+
 console.log('Configuration:', {
   PAGE_ARGS,
   PAGE_PATH,
@@ -31,26 +32,28 @@ const viewportObj = ((obj) => {
   deviceScaleFactor
 } || {});
 
-(async () => {
-  const browser = await puppeteer.launch({ headless: true });
+const pixelWidth = Math.floor(viewportObj.width * viewportObj.deviceScaleFactor);
+const pixelHeight = Math.floor(viewportObj.height * viewportObj.deviceScaleFactor);
 
+(async () => {
+  const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto(PAGE_URL);
-  await page.waitFor('html.dom-complete');
   await page.setViewport(viewportObj);
+  await page.waitFor('html.dom-complete');
 
-  const pixelWidth = Math.floor(viewportObj.width * viewportObj.deviceScaleFactor);
-  const pixelHeight = Math.floor(viewportObj.height * viewportObj.deviceScaleFactor);
   const pageTitle = await page.title();
   const wallpaperName = `${pageTitle || 'code-on-the-wall'}_${pixelWidth}x${pixelHeight}.png`;
-  const wallpaperPath = path.resolve(__dirname, `./output/${wallpaperName}`);
+  const wallpaperPath = `./output/${wallpaperName}`;
   
   console.log('Taking screenshot:', {
     wallpaperName,
     wallpaperPath,
     viewportObj
   });
+
   await page.screenshot({ path: wallpaperPath });
+
   console.log('Wallpaper saved:', wallpaperPath);
 
   await browser.close();

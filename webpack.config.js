@@ -27,12 +27,13 @@ module.exports = {
         ],
     },
     plugins: [
-        new webpack.optimize.UglifyJsPlugin({
-            sourceMap: true
-        }),
         new HtmlWebpackPlugin({
             inject: 'head'
         }),
     ],
     devtool: 'source-map',
+    mode: 'production',
+    optimization: {
+        minimize: true
+    }
 };
