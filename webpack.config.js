@@ -1,18 +1,16 @@
-const path = require('path');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+/* eslint-env node */
 
 module.exports = {
-    entry: './src/index.js',
+    entry: './src/index.mjs',
     output: {
-        path: path.resolve(__dirname, 'dist'),
+        path: __dirname + '/dist',
         filename: 'code-on-the-wall.js',
     },
     module: {
         rules: [{
-            test: /\.js$/,
+            test: /\.mjs$/,
             include: [
-                path.resolve(__dirname, 'src'),
+                __dirname + '/src',
             ],
             use: [
                 'babel-loader',
@@ -23,19 +21,12 @@ module.exports = {
     resolve: {
         modules: [
             'node_modules',
-            path.resolve(__dirname, 'src'),
-            path.resolve(__dirname, 'src/includes'),
-            path.resolve(__dirname, 'src/includes/common'),
+            './src',
+            './src/includes',
+            './src/includes/common',
+            './src/includes/loaders',
         ],
     },
-    plugins: [
-        new HtmlWebpackPlugin({
-            inject: 'head'
-        }),
-    ],
     devtool: 'source-map',
     mode: 'production',
-    optimization: {
-        minimize: true
-    }
 };

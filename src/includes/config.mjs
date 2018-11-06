@@ -1,5 +1,6 @@
-import URLSearchParams from 'url-search-params'
-import { isUndefined } from 'is-type'
+import {
+    isUndefined
+} from 'is-type'
 
 const DEFAULT_STYLES = {
     opacity: .2,
@@ -22,14 +23,16 @@ const QUERY_STRING_OBJECT = ((qsIterator) => {
     return newObj;
 })(QUERY_STRING);
 
+const CONFIG_OBJECT = Object.assign({}, DEFAULT_STYLES, QUERY_STRING_OBJECT);
+
 export const getConfig = () => {
-    return Object.assign({}, DEFAULT_STYLES, QUERY_STRING_OBJECT);
+    return CONFIG_OBJECT;
 };
 
 export const getConfigValue = (key) => {
-    return getConfig()[key];
-}
+    return CONFIG_OBJECT[key];
+};
 
 export const hasConfigValue = (key) => {
-    return !isUndefined(getConfig()[key]);
-}
+    return !isUndefined(CONFIG_OBJECT[key]);
+};
