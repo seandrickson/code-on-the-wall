@@ -1,5 +1,5 @@
-import { htmlNode, codeNode } from 'get-node'
+import { htmlNode, codeNode } from "./common/get-node.mjs";
 
-export default function () {
-    htmlNode().style.backgroundColor = codeNode().style.backgroundColor;
-}
+export default () => {
+  htmlNode().style.backgroundColor = codeNode().style.backgroundColor;
+};

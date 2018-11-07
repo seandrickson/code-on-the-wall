@@ -1,9 +1,9 @@
 export const htmlNode = () => {
-    return document.documentElement;
-}
+  return document.documentElement;
+};
 export const headNode = () => {
-    return document.head;
-}
+  return document.head;
+};
 export const codeNode = () => {
-    return document.body;
-}
+  return document.body;
+};

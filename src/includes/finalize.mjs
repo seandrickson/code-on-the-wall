@@ -1,8 +1,8 @@
-import onload from 'onload'
-import { htmlNode } from 'get-node'
+import onload from "./common/onload.mjs";
+import { htmlNode } from "./common/get-node.mjs";
 
 export default () => {
-    onload(() => {
-        htmlNode().classList.add('dom-complete');
-    });
-}
+  onload(() => {
+    htmlNode().classList.add("dom-complete");
+  });
+};
