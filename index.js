@@ -17,7 +17,7 @@ const {
 } = require('./wall-config');
 
 const PAGE_ARGS = Object.assign({}, args, wallConfig);
-const PAGE_PATH = __dirname + '/index.html';
+const PAGE_PATH = '/index.html';
 const PAGE_QUERY = qs.stringify(PAGE_ARGS);
 
 console.log('Configuration:', {
@@ -44,10 +44,19 @@ const viewportObj = {
 const pixelWidth = calcPixelDims(viewportObj.width, viewportObj.deviceScaleFactor);
 const pixelHeight = calcPixelDims(viewportObj.height, viewportObj.deviceScaleFactor);
 
+const nodeStatic = require('node-static');
+const fileServer = new nodeStatic.Server();
+
+const server = require('http').createServer((request, response) => {
+  request.addListener('end', () => {
+    fileServer.serve(request, response);
+  }).resume();
+}).listen(8080);
+
 (async () => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  await page.goto(`file:///${PAGE_PATH}?${PAGE_QUERY}`);
+  await page.goto(`http://localhost:8080${PAGE_PATH}?${PAGE_QUERY}`);
   await page.setViewport(viewportObj);
   await page.waitFor('html.dom-complete');
 
@@ -68,4 +77,5 @@ const pixelHeight = calcPixelDims(viewportObj.height, viewportObj.deviceScaleFac
   console.log('Wallpaper saved:', wallpaperPath);
 
   await browser.close();
+  await server.close();
 })();
