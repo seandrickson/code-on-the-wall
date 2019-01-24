@@ -5,9 +5,10 @@
   "main": "index.js",
   "author": "Sean Hendrickson",
   "license": "Apache-2.0",
+  "repository": "git@github.com:seandrickson/code-on-the-wall.git",
   "scripts": {
-    "setup": "yarn",
-    "start": "yarn test && node index.js",
+    "prestart": "npm run test",
+    "start": "node index.js",
     "test": "eslint ./src/**"
   },
   "devDependencies": {
