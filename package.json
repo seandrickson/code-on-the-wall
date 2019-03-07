@@ -9,7 +9,7 @@
   "scripts": {
     "prestart": "npm run test",
     "start": "node index.js",
-    "test": "eslint ./src/**"
+    "test": "eslint --ext .mjs ./src/**"
   },
   "devDependencies": {
     "eslint": "^5.12.1",

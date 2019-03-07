@@ -13,9 +13,9 @@ const DEFAULT_STYLES = {
   // opinionated defaults
   opacity: 0.2,
   font: "60%/0.9 Source Code Pro, Consolas, monospace",
-  code: "vue",
+  code: "core-js",
   googleFont: "Source Code Pro",
-  highlightStyle: "paraiso-dark"
+  highlightStyle: "tomorrow-night-eighties"
 };
 
 const QUERY_STRING = new URLSearchParams(window.location.search.slice(1));
