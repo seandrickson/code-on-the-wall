@@ -1,5 +1,5 @@
 const CODE_TO_DISPLAY =
-  "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js";
+  "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js";
 
 const parseResultFromResponse = response => {
   try {

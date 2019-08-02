@@ -12,9 +12,9 @@
     "test": "eslint --ext .mjs ./src/**"
   },
   "devDependencies": {
-    "eslint": "^5.12.1",
+    "eslint": "^6.1.0",
     "node-static": "^0.7.11",
-    "puppeteer": "^1.11.0",
-    "yargs": "^12.0.5"
+    "puppeteer": "^1.19.0",
+    "yargs": "^13.3.0"
   }
 }

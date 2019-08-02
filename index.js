@@ -2,25 +2,34 @@
 
 const puppeteer = require('puppeteer');
 const qs = require('querystring');
-const {
-  _,
-  $0,
-  help,
-  version,
-  ...args
-} = require('yargs').argv;
+const args = require('yargs').argv;
 const {
   width,
   height,
   deviceScaleFactor,
+  debug,
   ...wallConfig
 } = require('./wall-config');
 
-const PAGE_ARGS = Object.assign({}, args, wallConfig);
+const PAGE_ARGS = Object.assign(
+  Object.keys(args)
+    .filter(key => !(['_', '$0', 'help', 'version', 'debug'].includes(key)))
+    .reduce((obj, key) => {
+      obj[key] = args[key];
+      return obj;
+    }, {}),
+  wallConfig
+);
+
 const PAGE_PATH = '/index.html';
 const PAGE_QUERY = qs.stringify(PAGE_ARGS);
 
-console.log('Configuration:', {
+const LOG = function() {
+  if (debug || args.debug)
+    console.log.apply(this, arguments);
+};
+
+LOG('Configuration:', {
   PAGE_ARGS,
   PAGE_PATH,
   PAGE_QUERY
@@ -64,7 +73,7 @@ const server = require('http').createServer((request, response) => {
   const wallpaperName = `${pageTitle || 'code-on-the-wall'}_${pixelWidth}x${pixelHeight}.png`;
   const wallpaperPath = `./output/${wallpaperName}`;
 
-  console.log('Taking screenshot:', {
+  LOG('Taking screenshot:', {
     wallpaperName,
     wallpaperPath,
     viewportObj
@@ -74,7 +83,7 @@ const server = require('http').createServer((request, response) => {
     path: wallpaperPath
   });
 
-  console.log('Wallpaper saved:', wallpaperPath);
+  LOG('Wallpaper saved:', wallpaperPath);
 
   await browser.close();
   await server.close();

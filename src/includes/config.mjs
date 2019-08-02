@@ -1,22 +1,5 @@
 import { isUndefined } from "./common/is-type.mjs";
-
-const DEFAULT_STYLES = {
-  // must have defaults
-  overflow: "hidden",
-  margin: 0,
-  padding: 0,
-  wordBreak: "break-all",
-  hyphens: "none",
-  textAlign: "center",
-  pointerEvents: "none",
-  userSelect: "none",
-  // opinionated defaults
-  opacity: 0.2,
-  font: "60%/0.9 Source Code Pro, Consolas, monospace",
-  code: "core-js",
-  googleFont: "Source Code Pro",
-  highlightStyle: "tomorrow-night-eighties"
-};
+import DEFAULT_STYLES from "./defaults.mjs";
 
 const QUERY_STRING = new URLSearchParams(window.location.search.slice(1));
 const QUERY_STRING_OBJECT = (qsIterator => {
