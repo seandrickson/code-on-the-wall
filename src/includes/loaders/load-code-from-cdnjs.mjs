@@ -11,12 +11,10 @@ const parseResultFromResponse = response => {
 
 export default async codeName => {
   if (codeName) {
-    const response = await fetch(
+    return fetch(
       `https://api.cdnjs.com/libraries?search=${encodeURIComponent(codeName)}`
-    );
-    const resJson = await response.json();
-    return parseResultFromResponse(resJson);
+    ).then(res => res.json()).then(parseResultFromResponse);
   } else {
-    return CODE_TO_DISPLAY;
+    return Promise.resolve(CODE_TO_DISPLAY);
   }
 };

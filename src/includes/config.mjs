@@ -1,4 +1,3 @@
-import { isUndefined } from "./common/is-type.mjs";
 import DEFAULT_STYLES from "./defaults.mjs";
 
 const QUERY_STRING = new URLSearchParams(window.location.search.slice(1));
@@ -18,8 +17,4 @@ export const getConfig = () => {
 
 export const getConfigValue = key => {
   return CONFIG_OBJECT[key];
-};
-
-export const hasConfigValue = key => {
-  return !isUndefined(CONFIG_OBJECT[key]);
 };

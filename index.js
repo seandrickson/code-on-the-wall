@@ -1,5 +1,5 @@
-/* eslint-env node */
-
+const http = require('http');
+const handler = require('serve-handler');
 const puppeteer = require('puppeteer');
 const qs = require('querystring');
 const args = require('yargs').argv;
@@ -53,16 +53,11 @@ const viewportObj = {
 const pixelWidth = calcPixelDims(viewportObj.width, viewportObj.deviceScaleFactor);
 const pixelHeight = calcPixelDims(viewportObj.height, viewportObj.deviceScaleFactor);
 
-const nodeStatic = require('node-static');
-const fileServer = new nodeStatic.Server();
-
-const server = require('http').createServer((request, response) => {
-  request.addListener('end', () => {
-    fileServer.serve(request, response);
-  }).resume();
-}).listen(8080);
-
 (async () => {
+  const server = http
+    .createServer(handler)
+    .listen(8080);
+
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto(`http://localhost:8080${PAGE_PATH}?${PAGE_QUERY}`);

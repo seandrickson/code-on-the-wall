@@ -10,8 +10,8 @@ export default {
   userSelect: "none",
 
   // opinionated defaults
-  opacity: 0.1,
-  font: "50%/0.9 Source Code Pro, Consolas, monospace",
+  opacity: 0.25,
+  font: "50%/0.85 Source Code Pro, Consolas, monospace",
   code: "vue",
   googleFont: "Source Code Pro",
   highlightStyle: "ocean",

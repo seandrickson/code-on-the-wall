@@ -1,13 +1,17 @@
 import loadGoogleFont from "./load-google-font.mjs";
 import loadHighlightStyle from "./load-highlight-style.mjs";
-import { codeNode } from "../common/get-node.mjs";
-import { getConfig, getConfigValue, hasConfigValue } from "../config.mjs";
+import { htmlNode, codeNode } from "../common/get-node.mjs";
+import { getConfig, getConfigValue } from "../config.mjs";
 
 export default () => {
-  if (hasConfigValue("googleFont"))
-    loadGoogleFont(getConfigValue("googleFont"));
+  const googleFont = getConfigValue("googleFont");
+  const highlightStyle = getConfigValue("highlightStyle");
+  if (googleFont)
+    loadGoogleFont(googleFont);
 
-  loadHighlightStyle(getConfigValue("highlightStyle"));
-  const styles = getConfig();
-  Object.assign(codeNode().style, styles);
+  if (highlightStyle)
+    loadHighlightStyle(highlightStyle);
+
+  Object.assign(codeNode().style, getConfig());
+  htmlNode().style.backgroundColor = codeNode().style.backgroundColor;
 };
