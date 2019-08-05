@@ -1,6 +1,5 @@
-export default (fn, ...args) => {
-  if (typeof fn !== "function") return;
+export default (fn = () => {}) => {
   document.readyState === "complete"
-    ? fn.call(this, args)
-    : window.addEventListener("load", fn.bind(this, args));
+    ? fn()
+    : window.addEventListener("load", fn);
 };
