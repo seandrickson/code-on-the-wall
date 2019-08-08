@@ -1,3 +1,4 @@
+const CDNJS_API = "https://api.cdnjs.com/libraries";
 const CODE_TO_DISPLAY =
   "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js";
 
@@ -11,9 +12,10 @@ const parseResultFromResponse = response => {
 
 export default async codeName => {
   if (codeName) {
-    return fetch(
-      `https://api.cdnjs.com/libraries?search=${encodeURIComponent(codeName)}`
-    ).then(res => res.json()).then(parseResultFromResponse);
+    const search = encodeURIComponent(codeName);
+    return fetch(`${CDNJS_API}?search=${search}`)
+      .then(res => res.json())
+      .then(parseResultFromResponse);
   } else {
     return Promise.resolve(CODE_TO_DISPLAY);
   }
