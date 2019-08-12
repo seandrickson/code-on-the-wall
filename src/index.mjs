@@ -1,6 +1,6 @@
 import { getConfigValue } from "./includes/config.mjs";
 import cleanCodeText from "./includes/clean-code-text.mjs";
-import initHighlight from "./includes/init-highlight.mjs";
+import loadHighlightJs from "./includes/loaders/load-highlight-js.mjs";
 import addZwsForWrapping from "./includes/add-zws-for-wrapping.mjs";
 import finalize from "./includes/finalize.mjs";
 import { codeNode } from "./includes/common/get-node.mjs";
@@ -17,7 +17,7 @@ import loadCodeFromCdnjs from "./includes/loaders/load-code-from-cdnjs.mjs";
     .then(res => res.text())
     .then(cleanCodeText);
 
-  await initHighlight();
+  await loadHighlightJs();
   // insert zero-width spaces to force wrapping
   addZwsForWrapping();
   finalize();

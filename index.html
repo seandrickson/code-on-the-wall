@@ -1,10 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html class="hljs">
   <head>
     <title>Code On The Wall</title>
     <meta charset="utf-8" />
     <script type="module" src="./src/index.mjs"></script>
+    <style>
+      body, pre {
+        margin: 0;
+      }
+
+      pre {
+        white-space: pre-wrap;
+        word-break: break-all;
+        text-align: justify;
+        pointer-events: none;
+        user-select: none;
+      }
+
+      .hljs {
+        padding: 0 !important;
+        overflow: hidden !important;
+        font: 100%/1 monospace, monospace;
+      }
+    </style>
   </head>
 
-  <body></body>
+  <body>
+    <pre><code></code></pre>
+  </body>
 </html>

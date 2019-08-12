@@ -1,3 +1,5 @@
+import { headNode } from "./get-node.mjs";
+
 const addResource = type => {
   type = type === "style" ? "link" : type;
 
@@ -13,7 +15,7 @@ const addResource = type => {
       }
       elem.onload = resolve;
       elem.onerror = reject;
-      document.head.appendChild(elem);
+      headNode().appendChild(elem);
     });
   };
 };
