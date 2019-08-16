@@ -13,11 +13,13 @@ import loadCodeFromCdnjs from "./includes/loaders/load-code-from-cdnjs.mjs";
   const jsCode = await loadCodeFromCdnjs(getConfigValue("code"));
   document.title = jsCode.split("/").pop();
 
-  codeNode().innerText = await fetch(jsCode)
+  const code = await fetch(jsCode)
     .then(res => res.text())
     .then(cleanCodeText);
 
-  await loadHighlightJs();
+  const formattedCode = await loadHighlightJs(code);
+  codeNode().innerHTML = formattedCode;
+
   // insert zero-width spaces to force wrapping
   addZwsForWrapping();
   finalize();
