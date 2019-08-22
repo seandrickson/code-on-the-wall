@@ -1,4 +1,4 @@
-import DEFAULT_STYLES from "./defaults.mjs";
+import DEFAULT_STYLES from "/src/includes/defaults.mjs";
 
 const QUERY_STRING = new URLSearchParams(window.location.search.slice(1));
 const QUERY_STRING_OBJECT = (qsIterator => {

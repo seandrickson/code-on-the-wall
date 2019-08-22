@@ -4,5 +4,5 @@ export default {
   font: "50%/0.85 Source Code Pro, Consolas, monospace",
   code: "vue",
   googleFont: "Source Code Pro",
-  highlightStyle: "ocean"
+  highlightStyle: "atom-one-dark"
 };
