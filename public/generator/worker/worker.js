@@ -1,4 +1,6 @@
-importScripts("/src/lib/highlight/highlight.pack.js");
+importScripts(
+  "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js"
+);
 
 const cleanCodeText = text => {
   return String(text)
@@ -7,7 +9,8 @@ const cleanCodeText = text => {
 };
 
 onmessage = async event => {
-  const code = await fetch(event.data)
+  const url = event.data;
+  const code = await fetch(url)
     .then(res => res.text())
     .then(cleanCodeText);
   const result = self.hljs.highlightAuto(code);

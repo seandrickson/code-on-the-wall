@@ -5,7 +5,9 @@
   },
   "env": {
     "browser": true,
-    "es6": true
+    "es6": true,
+    "worker": true,
+    "node": false
   },
   "rules": {
     "no-console": "error"

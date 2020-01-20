@@ -58,7 +58,13 @@ const pixelHeight = calcPixelDims(
 );
 
 (async () => {
-  const server = http.createServer(handler).listen(8080);
+  const server = http
+    .createServer((req, res) => {
+      return handler(req, res, {
+        public: "public/generator"
+      });
+    })
+    .listen(8080);
 
   const browser = await puppeteer.launch();
   const page = await browser.newPage();

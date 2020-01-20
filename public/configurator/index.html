@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CotW - Wall Config</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.1/build/pure-min.css" integrity="sha384-oAOxQR6DkCoMliIh8yFnu25d7Eq/PHS21PClpwjOTeU2jRSq11vu66rf90/cZr47" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <iframe src="/generator/" id="bg" name="bg" title="bg"></iframe>
+    <div id="form">
+      <h1>Config</h1>
+      <form action="/generator/" method="get" name="codeOnTheWall" class="pure-form pure-form-aligned" target="bg">
+        <fieldset>
+          <div class="pure-control-group">
+            <label for="code">Code</label>
+            <input type="text" id="code" name="code" value="vue" />
+          </div>
+          <div class="pure-control-group">
+            <label for="opacity">Opacity</label>
+            <input type="range" id="opacity" name="opacity" value=".25" min="0" max="1" step=".01" />
+          </div>
+          <div class="pure-control-group">
+            <label for="font-size">Font Size</label>
+            <input type="text" id="font-size" name="font-size" value="50%" />
+          </div>
+          <div class="pure-control-group">
+            <label for="line-height">Line Height</label>
+            <input type="text" id="line-height" name="line-height" value="0.85" />
+          </div>
+          <div class="pure-control-group">
+            <label for="font-family">Font Family</label>
+            <input type="text" id="font-family" name="font-family" value="Source Code Pro, Consolas, monospace" />
+          </div>
+          <div class="pure-control-group">
+            <label for="googleFont">Google Font</label>
+            <input type="text" id="googleFont" name="googleFont" value="Source Code Pro" />
+          </div>
+          <div class="pure-control-group">
+            <label for="highlightStyle">Highlight.js Style</label>
+            <select id="highlightStyle" name="highlightStyle" value="atom-one-dark">
+              <option value="atom-one-dark">Select highlight style</option>
+            </select>
+          </div>
+          <div class="pure-controls">
+            <button type="submit" class="pure-button pure-button-primary">Download</button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+    <script src="js/config.js"></script>
+  </body>
+</html>
