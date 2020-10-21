@@ -1,5 +1,5 @@
 import addWorker from "./common/add-worker.mjs";
-import { htmlNode, codeNode } from "./common/get-node.mjs";
+import { parentNode, codeNode } from "./common/get-node.mjs";
 import loadCodeFromCdnjs from "./loaders/load-code-from-cdnjs.mjs";
 import loadGoogleFont from "./loaders/load-google-font.mjs";
 import loadHighlightStyle from "./loaders/load-highlight-style.mjs";
@@ -18,13 +18,13 @@ const highlightStyle = getConfigValue("highlightStyle");
 if (googleFont) loadGoogleFont(googleFont);
 if (highlightStyle) loadHighlightStyle(highlightStyle);
 
-Object.assign(htmlNode().style, getConfig());
+Object.assign(parentNode().style, getConfig());
 
 // LOAD CODE FROM CDN
 (async () => {
   const codeUrl = await loadCodeFromCdnjs(getConfigValue("code"));
   document.title = generateFilename(codeUrl);
   codeNode().innerHTML = await addWorker("./worker/worker.js", codeUrl).then(
-    event => event.data
+    (event) => event.data
   );
 })();

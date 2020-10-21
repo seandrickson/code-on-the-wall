@@ -1,6 +1,2 @@
-export const htmlNode = () => {
-  return document.documentElement;
-};
-export const codeNode = () => {
-  return document.querySelector("code");
-};
+export const codeNode = () => document.querySelector("code");
+export const parentNode = () => codeNode().parentNode;

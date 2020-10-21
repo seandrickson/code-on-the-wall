@@ -2,7 +2,7 @@ export default {
   // opinionated defaults
   opacity: 0.25,
   font: "50%/0.85 Source Code Pro, Consolas, monospace",
-  code: "vue",
+  code: "jquery",
   googleFont: "Source Code Pro",
-  highlightStyle: "atom-one-dark"
+  highlightStyle: "night-owl",
 };
