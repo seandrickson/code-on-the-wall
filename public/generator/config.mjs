@@ -6,10 +6,5 @@ const QUERY_STRING = Object.fromEntries(
 
 const CONFIG_OBJECT = Object.assign({}, DEFAULT_STYLES, QUERY_STRING);
 
-export const getConfig = () => {
-  return CONFIG_OBJECT;
-};
-
-export const getConfigValue = key => {
-  return CONFIG_OBJECT[key];
-};
+export const getConfig = () => CONFIG_OBJECT;
+export const getConfigValue = (key) => CONFIG_OBJECT[key];

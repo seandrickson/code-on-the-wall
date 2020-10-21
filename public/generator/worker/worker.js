@@ -2,11 +2,10 @@ importScripts(
   "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.3.1/highlight.min.js"
 );
 
-const cleanCodeText = (text) => {
-  return String(text)
+const cleanCodeText = (text) =>
+  String(text)
     .replace(/[\n\r]/g, "") // remove new lines
     .replace(/\/\*[\S\s]*?\*\//g, ""); // remove comment blocks
-};
 
 onmessage = async (event) => {
   const url = event.data;

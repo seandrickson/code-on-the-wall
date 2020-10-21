@@ -1,5 +1,5 @@
-export default src => {
-  return new Promise((resolve, reject) => {
+export default (src) =>
+  new Promise((resolve, reject) => {
     const elem = document.createElement("link");
     elem.rel = "stylesheet";
     elem.href = src;
@@ -7,4 +7,3 @@ export default src => {
     elem.onerror = reject;
     document.head.appendChild(elem);
   });
-};
