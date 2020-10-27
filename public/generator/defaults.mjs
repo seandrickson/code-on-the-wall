@@ -1,8 +1,8 @@
 export default {
   // opinionated defaults
-  opacity: 1,
-  font: "6px/0.85 Source Code Pro",
-  code: "d3",
+  opacity: 0.8,
+  font: "6px/.85 Source Code Pro",
+  code: "react-dom",
   googleFont: "Source Code Pro",
   highlightStyle: "night-owl",
 };

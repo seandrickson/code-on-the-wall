@@ -28,7 +28,8 @@ Object.assign(parentNode().style, getConfig());
 
 // LOAD CODE FROM CDN
 (async () => {
-  const codeUrl = await loadCodeFromCdnjs(getConfigValue("code"));
+  const codeUrl =
+    (await loadCodeFromCdnjs(getConfigValue("code"))) || highlightUrl;
   document.title = generateFilename(codeUrl);
 
   codeNode().innerHTML = await Promise.all([
