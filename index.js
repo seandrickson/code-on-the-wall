@@ -1,5 +1,5 @@
-const { createServer } = require("http");
-const handler = require("serve-handler");
+const express = require("express");
+const app = express();
 const puppeteer = require("puppeteer");
 const qs = require("querystring");
 const { argv } = require("yargs");
@@ -12,6 +12,7 @@ const {
 } = require("./wall-config");
 
 const PORT = 8080;
+const HOST_AND_PORT = `http://localhost:${PORT}`;
 const PAGE_ARGS = Object.assign(
   {},
   Object.keys(argv).filter(
@@ -57,29 +58,29 @@ const pixelHeight = calcPixelDims(
   viewportObj.deviceScaleFactor
 );
 
-(async () => {
-  const server = createServer((req, res) =>
-    handler(req, res, {
-      public: "public/generator",
-    })
-  ).listen(PORT);
+app.use("/configurator", express.static("public/configurator"));
+app.use("/generator", express.static("public/generator"));
+app.use("/output", express.static("output"));
 
+app.get("/", (_, res) => res.redirect("/configurator"));
+
+app.get("/generate", async (_, res) => {
   const browser = await puppeteer.launch({
     headless: !DEBUG_MODE,
   });
+
   const page = await browser.newPage();
   await page.setViewport(viewportObj);
-  await page.goto(`http://127.0.0.1:${PORT}${PAGE_PATH}?${PAGE_QUERY}`, {
+  await page.goto(`${HOST_AND_PORT}${PAGE_PATH}?${PAGE_QUERY}`, {
     waitUntil: ["networkidle0"],
   });
 
   const pageTitle = await page.title();
+
   const wallpaperName = `${
     pageTitle || "code-on-the-wall"
   }_${pixelWidth}x${pixelHeight}.png`;
   const wallpaperPath = `./output/${wallpaperName}`;
-
-  // return;
 
   LOG("Taking screenshot:", {
     wallpaperName,
@@ -93,6 +94,9 @@ const pixelHeight = calcPixelDims(
 
   LOG("Wallpaper saved:", wallpaperPath);
 
-  await browser.close();
-  server.close();
-})();
+  res.send({ path: wallpaperPath });
+});
+
+app.listen(PORT, () =>
+  console.log(`Now listening at http://localhost:${PORT}`)
+);
