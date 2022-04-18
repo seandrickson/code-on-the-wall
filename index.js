@@ -1,8 +1,9 @@
+/*eslint no-unused-vars: ["error", { "ignoreRestSiblings": true }]*/
+const yargs = require("yargs/yargs");
 const express = require("express");
 const app = express();
 const puppeteer = require("puppeteer");
 const qs = require("querystring");
-const { argv } = require("yargs");
 const {
   width,
   height,
@@ -10,14 +11,15 @@ const {
   debug,
   ...wallConfig
 } = require("./wall-config");
+const { argv } = yargs(process.argv.slice(2))
+  .default(wallConfig);
 
 const PORT = 8080;
-const HOST_AND_PORT = `http://localhost:${PORT}`;
+const DOMAIN = `http://120.0.0.1:${PORT}`;
+const EXCLUDE_ARGS = ["help", "version", "debug"];
 const PAGE_ARGS = Object.assign(
   {},
-  Object.keys(argv).filter(
-    (key) => !["_", "$0", "help", "version", "debug"].includes(key)
-  ),
+  Object.keys(argv).filter((key) => !EXCLUDE_ARGS.includes(key)),
   wallConfig
 );
 
@@ -25,8 +27,8 @@ const PAGE_PATH = "/index.html";
 const PAGE_QUERY = qs.stringify(PAGE_ARGS);
 const DEBUG_MODE = !!(debug || argv.debug);
 
-const LOG = function () {
-  if (DEBUG_MODE) console.log.apply(this, arguments);
+const LOG = (...args) => {
+  if (DEBUG_MODE) console.log.apply(this, args);
 };
 
 LOG("Configuration:", {
@@ -39,9 +41,7 @@ const cleanCssProp = (prop) => {
   if (prop !== undefined) return parseInt(String(prop).replace("px", ""));
 };
 
-const calcPixelDims = (dim, scale) => {
-  return Math.floor(dim * scale);
-};
+const calcPixelDims = (dim, scale) => Math.floor(dim * scale);
 
 const viewportObj = {
   width: cleanCssProp(width) || 1024,
@@ -71,15 +71,12 @@ app.get("/generate", async (_, res) => {
 
   const page = await browser.newPage();
   await page.setViewport(viewportObj);
-  await page.goto(`${HOST_AND_PORT}${PAGE_PATH}?${PAGE_QUERY}`, {
+  await page.goto(`${DOMAIN}${PAGE_PATH}?${PAGE_QUERY}`, {
     waitUntil: ["networkidle0"],
   });
 
-  const pageTitle = await page.title();
-
-  const wallpaperName = `${
-    pageTitle || "code-on-the-wall"
-  }_${pixelWidth}x${pixelHeight}.png`;
+  const pageTitle = (await page.title()) || "code-on-the-wall";
+  const wallpaperName = `${pageTitle}_${pixelWidth}x${pixelHeight}.png`;
   const wallpaperPath = `./output/${wallpaperName}`;
 
   LOG("Taking screenshot:", {
@@ -98,5 +95,5 @@ app.get("/generate", async (_, res) => {
 });
 
 app.listen(PORT, () =>
-  console.log(`Now listening at http://localhost:${PORT}`)
+  LOG(`Now listening at ${DOMAIN}`)
 );

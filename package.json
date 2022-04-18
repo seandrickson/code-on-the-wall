@@ -12,15 +12,15 @@
     "test": "eslint 'public/**/*.{mjs,js}'"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.3"
   },
   "devDependencies": {
-    "eslint": "^7.11.0",
-    "husky": "^4.3.0",
-    "lint-staged": "^10.4.2",
-    "prettier": "^2.1.2",
-    "puppeteer": "^5.3.1",
-    "yargs": "^16.1.0"
+    "eslint": "^8.13.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.8",
+    "prettier": "^2.6.2",
+    "puppeteer": "^13.5.2",
+    "yargs": "^17.4.1"
   },
   "husky": {
     "hooks": {
