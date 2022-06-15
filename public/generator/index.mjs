@@ -30,7 +30,7 @@ Object.assign(parentNode().style, getConfig());
 (async () => {
   const codeUrl =
     (await loadCodeFromCdnjs(getConfigValue("code"))) || highlightUrl;
-  document.title = generateFilename(codeUrl);
+  document.title = generateFilename();
 
   codeNode().innerHTML = await Promise.all([
     fetch(codeUrl),
@@ -38,11 +38,11 @@ Object.assign(parentNode().style, getConfig());
   ])
     .then(([res]) => res.text())
     .then(cleanCodeText)
-    .then((codeNode) => {
+    .then((cleanCodeNode) => {
       window.hljs.configure({
         tabReplace: " ",
       });
-      const code = window.hljs.highlight("javascript", codeNode);
+      const code = window.hljs.highlight("javascript", cleanCodeNode);
       return code.value;
     });
 })();
