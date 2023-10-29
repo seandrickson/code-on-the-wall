@@ -1,16 +1,18 @@
-/*eslint no-unused-vars: ["error", { "ignoreRestSiblings": true }]*/
-const yargs = require("yargs/yargs");
-const express = require("express");
+import { readFile } from "node:fs/promises";
+import qs from "node:querystring";
+import yargs from "yargs/yargs";
+import express from "express";
+import puppeteer from "puppeteer";
+
 const app = express();
-const puppeteer = require("puppeteer");
-const qs = require("querystring");
 const {
   width,
   height,
   deviceScaleFactor,
   debug,
   ...wallConfig
-} = require("./wall-config");
+} = JSON.parse(await readFile("./wall-config.json"));
+
 const { argv } = yargs(process.argv.slice(2))
   .default(wallConfig);
 
@@ -38,15 +40,18 @@ LOG("Configuration:", {
 });
 
 const cleanCssProp = (prop) => {
-  if (prop !== undefined) return parseInt(String(prop).replace("px", ""));
+  try {
+    return parseInt(String(prop).replace("px", ""))
+  } catch(_) {
+    // silence
+  }
 };
-
 const calcPixelDims = (dim, scale) => Math.floor(dim * scale);
 
 const viewportObj = {
-  width: cleanCssProp(width) || 1024,
-  height: cleanCssProp(height) || 768,
-  deviceScaleFactor: cleanCssProp(deviceScaleFactor) || 1,
+  width: cleanCssProp(width) ?? 1024,
+  height: cleanCssProp(height) ?? 768,
+  deviceScaleFactor: cleanCssProp(deviceScaleFactor) ?? 1,
 };
 
 const pixelWidth = calcPixelDims(
@@ -66,7 +71,7 @@ app.get("/", (_, res) => res.redirect("/configurator"));
 
 app.get("/generate", async (_, res) => {
   const browser = await puppeteer.launch({
-    headless: !DEBUG_MODE,
+    headless: DEBUG_MODE ? false : 'new',
   });
 
   const page = await browser.newPage();
@@ -75,7 +80,7 @@ app.get("/generate", async (_, res) => {
     waitUntil: ["networkidle0"],
   });
 
-  const pageTitle = (await page.title()) || "code-on-the-wall";
+  const pageTitle = (await page.title()) ?? "code-on-the-wall";
   const wallpaperName = `${pageTitle}_${pixelWidth}x${pixelHeight}.png`;
   const wallpaperPath = `./output/${wallpaperName}`;
 
@@ -85,13 +90,12 @@ app.get("/generate", async (_, res) => {
     viewportObj,
   });
 
-  await page.screenshot({
-    path: wallpaperPath,
-  });
+  const wallpaper = await page.screenshot({ fullPage : true });
+  await browser.close();
 
   LOG("Wallpaper saved:", wallpaperPath);
-
-  res.send({ path: wallpaperPath });
+  res.set('Content-Type', 'image/png');
+  res.send(wallpaper);
 });
 
 app.listen(PORT, () =>

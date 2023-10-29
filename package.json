@@ -2,25 +2,26 @@
   "name": "code-on-the-wall",
   "version": "1.0.0",
   "description": "Generate wallpaper from syntax highlighted, minified code",
-  "main": "index.js",
+  "main": "index.mjs",
   "author": "Sean Hendrickson",
   "license": "Apache-2.0",
   "repository": "git@github.com:seandrickson/code-on-the-wall.git",
+  "sourceType": "module",
   "scripts": {
     "prestart": "npm run test",
-    "start": "node index.js",
+    "start": "node index.mjs",
     "test": "eslint 'public/**/*.{mjs,js}'"
   },
   "dependencies": {
-    "express": "^4.17.3"
+    "express": "^4.18.2"
   },
   "devDependencies": {
-    "eslint": "^8.13.0",
-    "husky": "^7.0.4",
-    "lint-staged": "^12.3.8",
-    "prettier": "^2.6.2",
-    "puppeteer": "^13.5.2",
-    "yargs": "^17.4.1"
+    "eslint": "^8.52.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.0.2",
+    "prettier": "^3.0.3",
+    "puppeteer": "^21.4.1",
+    "yargs": "^17.7.2"
   },
   "husky": {
     "hooks": {

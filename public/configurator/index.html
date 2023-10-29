@@ -81,11 +81,13 @@
               <option value="atom-one-dark" selected>Select highlight style</option>
             </select>
           </div>
-          <div class="pure-controls">
-            <button type="submit" class="pure-button pure-button-primary">Download</button>
-          </div>
         </fieldset>
       </form>
+      <form action="/generate" method="get" name="downloadWall" class="pure-form pure-form-aligned" target="_blank">
+        <div class="pure-controls">
+          <button type="submit" class="pure-button pure-button-primary">Download</button>
+        </div>
+    </form>
     </div>
 
     <script>
@@ -94,6 +96,7 @@
       const HIGHLIGHT_CSS_DEFAULT = "night-owl";
 
       const $configForm = document.forms.codeOnTheWall;
+      const $downloadForm = document.forms.downloadWall;
 
       const updateBackground = () => {
         $configForm.submit();
